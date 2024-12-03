@@ -18,10 +18,17 @@ let package = Package(
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 "Day1",
+                "Day2",
             ],
             path: "Sources/AdventOfCode"),
         .target(
             name: "Day1",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "Parsing", package: "swift-parsing"),
+            ]),
+        .target(
+            name: "Day2",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "Parsing", package: "swift-parsing"),
