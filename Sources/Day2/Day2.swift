@@ -1,3 +1,4 @@
+import Algorithms
 import ArgumentParser
 import Foundation
 import Parsing
@@ -14,15 +15,25 @@ public struct Day2: ParsableCommand {
     @Argument(help: "The path to the input file.")
     public var inputFilePath: String
 
+    @Flag(help: "Enables the Problem Dampener")
+    public var dampen: Bool = false
+
     public init() {}
 
     public func run() throws {
         let input = try String(contentsOfFile: inputFilePath, encoding: .utf8)
             .trimmingCharacters(in: .whitespacesAndNewlines)
         let reports = try ReportsParser().parse(input)
-        let safeReportsCount = reports.count(where: \.isSafe)
 
-        print(safeReportsCount)
+        let safeReportsCount = reports.count(where: \.isSafe)
+        let safeDampenedReportsCount = reports.count { report in
+            report.dampenedLevelsCombinations
+                .lazy
+                .map(Report.init)
+                .contains(where: \.isSafe)
+        }
+        print("Safe:", safeReportsCount)
+        print("Safe (w/ Dampening):", safeDampenedReportsCount)
     }
 }
 
@@ -46,6 +57,10 @@ struct Report {
 
     var areAllDeltasNonZero: Bool {
         deltas.allSatisfy { $0 != 0 }
+    }
+
+    var dampenedLevelsCombinations: CombinationsSequence<[Int]> {
+        levels.combinations(ofCount: levels.count - 1)
     }
 
     var isSafe: Bool {
