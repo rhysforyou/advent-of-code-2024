@@ -2,8 +2,8 @@ import ArgumentParser
 import Foundation
 import Parsing
 
-public struct Day1: ParsableCommand {
-    public static let configuration = CommandConfiguration(
+package struct Day1: ParsableCommand {
+    package static let configuration = CommandConfiguration(
         commandName: "day1",
         abstract: "Day 1: Historian Hysteria",
         discussion: """
@@ -12,11 +12,11 @@ public struct Day1: ParsableCommand {
     )
 
     @Argument(help: "The path to the input file.")
-    public var inputFilePath: String
+    package var inputFilePath: String
 
-    public init() {}
+    package init() {}
 
-    public func run() throws {
+    package func run() throws {
         let input = try String(contentsOfFile: inputFilePath, encoding: .utf8)
         let (list1, list2) = try parseLists(input)
         let distance = calculateDistance(list1, list2)

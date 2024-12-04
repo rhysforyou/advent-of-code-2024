@@ -3,8 +3,8 @@ import ArgumentParser
 import Foundation
 import Parsing
 
-public struct Day2: ParsableCommand {
-    public static let configuration = CommandConfiguration(
+package struct Day2: ParsableCommand {
+    package static let configuration = CommandConfiguration(
         commandName: "day2",
         abstract: "Day 2: Red-Nosed Reports",
         discussion: """
@@ -13,14 +13,14 @@ public struct Day2: ParsableCommand {
     )
 
     @Argument(help: "The path to the input file.")
-    public var inputFilePath: String
+    package var inputFilePath: String
 
     @Flag(help: "Enables the Problem Dampener")
-    public var dampen: Bool = false
+    package var dampen: Bool = false
 
-    public init() {}
+    package init() {}
 
-    public func run() throws {
+    package func run() throws {
         let input = try String(contentsOfFile: inputFilePath, encoding: .utf8)
             .trimmingCharacters(in: .whitespacesAndNewlines)
         let reports = try ReportsParser().parse(input)

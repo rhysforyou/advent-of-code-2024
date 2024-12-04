@@ -6,8 +6,8 @@ var doRegexp: Regex<(Substring)> { /do\(\)/ }
 var dontRegexp: Regex<(Substring)> { /don't\(\)/ }
 var mulRegex: Regex<(Substring, Substring, Substring)> { /mul\((\d{1,3}),(\d{1,3})\)/ }
 
-public struct Day3: ParsableCommand {
-    public static let configuration = CommandConfiguration(
+package struct Day3: ParsableCommand {
+    package static let configuration = CommandConfiguration(
         commandName: "day3",
         abstract: "Day 3: Mull It Over",
         discussion: """
@@ -16,11 +16,11 @@ public struct Day3: ParsableCommand {
     )
 
     @Argument(help: "The path to the input file.")
-    public var inputFilePath: String
+    package var inputFilePath: String
 
-    public init() {}
+    package init() {}
 
-    public func run() throws {
+    package func run() throws {
         let input = try String(contentsOfFile: inputFilePath, encoding: .utf8)
             .trimmingCharacters(in: .whitespacesAndNewlines)
 

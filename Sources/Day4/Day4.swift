@@ -1,7 +1,7 @@
 import ArgumentParser
 
-public struct Day4: ParsableCommand {
-    public static let configuration = CommandConfiguration(
+package struct Day4: ParsableCommand {
+    package static let configuration = CommandConfiguration(
         commandName: "day4",
         abstract: "Day 4: Ceres Search",
         discussion: """
@@ -10,11 +10,11 @@ public struct Day4: ParsableCommand {
     )
 
     @Argument(help: "The path to the input file.")
-    public var inputFilePath: String
+    package var inputFilePath: String
 
-    public init() {}
+    package init() {}
 
-    public func run() throws {
+    package func run() throws {
         let input = try String(contentsOfFile: inputFilePath, encoding: .utf8)
             .trimmingCharacters(in: .whitespacesAndNewlines)
         let wordSearch = WordSearch(fromString: input)
