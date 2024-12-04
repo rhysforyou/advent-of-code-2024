@@ -49,10 +49,6 @@ struct WordSearch {
     var rowCount: Int { letters.count }
     var colunmCount: Int { letters.first?.count ?? 0 }
 
-    init(letters: [[Character]]) {
-        self.letters = letters
-    }
-
     init(fromString string: String) {
         letters = string.split(separator: "\n").map { Array($0) }
     }
@@ -68,10 +64,12 @@ struct WordSearch {
                 for (index, (letter, rowOffset, colOffset)) in pattern.enumerated() {
                     let newRow = row + rowOffset
                     let newCol = col + colOffset
-                    if newRow < 0 || newRow >= rowCount || newCol < 0 || newCol >= colunmCount {
-                        break
-                    }
-                    if letters[newRow][newCol] != letter {
+                    guard newRow >= 0,
+                        newRow < rowCount,
+                        newCol >= 0,
+                        newCol < colunmCount,
+                        letters[newRow][newCol] == letter
+                    else {
                         break
                     }
                     if index == pattern.count - 1 {
