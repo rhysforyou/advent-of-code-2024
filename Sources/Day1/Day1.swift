@@ -22,8 +22,8 @@ public struct Day1: ParsableCommand {
         let distance = calculateDistance(list1, list2)
         let similarity = calculateSimilarityScores(list1, list2)
 
-        print("Distance: ", distance)
-        print("Similarity: ", similarity)
+        print("Part 1:", distance)
+        print("Part 2:", similarity)
     }
 
     func parseLists(_ input: String) throws -> ([Int], [Int]) {
@@ -40,7 +40,8 @@ public struct Day1: ParsableCommand {
 
     func calculateSimilarityScores(_ list1: [Int], _ list2: [Int]) -> Int {
         let list2Counts = Dictionary(list2.map { ($0, 1) }, uniquingKeysWith: +)
-        return list1
+        return
+            list1
             .map { $0 * list2Counts[$0, default: 0] }
             .reduce(0, +)
     }

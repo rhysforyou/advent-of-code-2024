@@ -24,8 +24,8 @@ public struct Day3: ParsableCommand {
         let input = try String(contentsOfFile: inputFilePath, encoding: .utf8)
             .trimmingCharacters(in: .whitespacesAndNewlines)
 
-        print(naiveCount(input: input))
-        print(count(input: input))
+        print("Part 1:", naiveCount(input: input))
+        print("Part 2:", count(input: input))
     }
 
     private func naiveCount(input: String) -> Int {

@@ -32,8 +32,8 @@ public struct Day2: ParsableCommand {
                 .map(Report.init)
                 .contains(where: \.isSafe)
         }
-        print("Safe:", safeReportsCount)
-        print("Safe (w/ Dampening):", safeDampenedReportsCount)
+        print("Part 1:", safeReportsCount)
+        print("Part 2:", safeDampenedReportsCount)
     }
 }
 

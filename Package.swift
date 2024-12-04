@@ -40,12 +40,13 @@ let package = Package(
         .target(
             name: "Day3",
             dependencies: [
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "ArgumentParser", package: "swift-argument-parser")
             ]),
         .target(
             name: "Day4",
             dependencies: [
-                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "ArgumentParser", package: "swift-argument-parser")
             ]),
-    ]
+    ],
+    swiftLanguageModes: [.v6]
 )
