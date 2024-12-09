@@ -1,4 +1,5 @@
 import ArgumentParser
+import Collections
 import Parsing
 
 package struct Day5: ParsableCommand {
@@ -21,6 +22,7 @@ package struct Day5: ParsableCommand {
         let input = try PageInputParser().parse(rawInput)
 
         print("Step 1:", input.correctnessScore)
+        print("Step 2:", input.fixedIncorrectUpdatesScore)
     }
 }
 
@@ -30,22 +32,25 @@ struct PageInput {
 
     var correctUpdates: [PageUpdate] {
         updates.filter { update in
-            rules.allSatisfy { rule in
-                update.isCorrectlyOrdered(rule)
-            }
+            update.isCorrectlyOrdered(rules)
         }
     }
 
     var incorrectUpdates: [PageUpdate] {
         updates.filter { update in
-            rules.contains { rule in
-                !update.isCorrectlyOrdered(rule)
-            }
+            !update.isCorrectlyOrdered(rules)
         }
     }
 
     var correctnessScore: Int {
         correctUpdates
+            .map(\.middlePage)
+            .reduce(0, +)
+    }
+
+    var fixedIncorrectUpdatesScore: Int {
+        incorrectUpdates
+            .map { $0.withFixedPageOrder(rules: rules) }
             .map(\.middlePage)
             .reduce(0, +)
     }
@@ -57,28 +62,41 @@ struct PageRule {
 }
 
 struct PageUpdate {
-    var pages: [Int]
+    var pages: OrderedSet<Int>
 
-    func isCorrectlyOrdered(_ rule: PageRule) -> Bool {
-        // Rules only apply if the update includes both pages
-        guard let beforeIndex = pages.firstIndex(of: rule.before),
-            let afterIndex = pages.firstIndex(of: rule.after)
-        else {
-            return true
+    func isCorrectlyOrdered(_ rules: [PageRule]) -> Bool {
+        rules.allSatisfy { rule in
+            // Rules only apply if the update includes both pages
+            guard let beforeIndex = pages.firstIndex(of: rule.before),
+                let afterIndex = pages.firstIndex(of: rule.after)
+            else {
+                return true
+            }
+
+            return beforeIndex < afterIndex
         }
-
-        return beforeIndex < afterIndex
     }
 
-    mutating func correctOrder(_ rule: PageRule) {
-        guard !isCorrectlyOrdered(rule) else { return }
+    mutating func fixPageOrder(rules: [PageRule]) {
+        while !isCorrectlyOrdered(rules) {
+            for rule in rules {
+                guard let beforeIndex = pages.firstIndex(of: rule.before),
+                      let afterIndex = pages.firstIndex(of: rule.after)
+                else {
+                    continue
+                }
 
-        guard pages.firstIndex(of: rule.before) != nil,
-            pages.firstIndex(of: rule.after) != nil
-        else {
-            return
+                if beforeIndex > afterIndex {
+                    pages.swapAt(beforeIndex, afterIndex)
+                }
+            }
         }
+    }
 
+    func withFixedPageOrder(rules: [PageRule]) -> PageUpdate {
+        var fixedUpdate = self
+        fixedUpdate.fixPageOrder(rules: rules)
+        return fixedUpdate
     }
 
     var middlePage: Int {
@@ -121,7 +139,7 @@ struct PageRuleParser: Parser {
 struct PageUpdateParser: Parser {
     var body: some Parser<Substring, PageUpdate> {
         Parse(PageUpdate.init) {
-            Many {
+            Many(into: OrderedSet<Int>(), { $0.append($1) }) {
                 Int.parser()
             } separator: {
                 ","

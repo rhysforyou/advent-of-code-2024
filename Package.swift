@@ -15,6 +15,7 @@ let package = Package(
         .package(url: "https://github.com/apple/swift-argument-parser.git", "1.5.0"..<"1.6.0"),
         .package(url: "https://github.com/pointfreeco/swift-parsing.git", "0.13.0"..<"0.14.0"),
         .package(url: "https://github.com/apple/swift-algorithms.git", "1.2.0"..<"1.3.0"),
+        .package(url: "https://github.com/apple/swift-collections.git", "1.1.0"..<"1.2.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -57,6 +58,7 @@ let package = Package(
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser"),
                 .product(name: "Parsing", package: "swift-parsing"),
+                .product(name: "Collections", package: "swift-collections"),
             ]),
     ],
     swiftLanguageModes: [.v6]
