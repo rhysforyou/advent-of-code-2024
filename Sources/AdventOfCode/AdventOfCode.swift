@@ -3,6 +3,7 @@ import Day1
 import Day2
 import Day3
 import Day4
+import Day5
 
 @main
 struct AdventOfCode: ParsableCommand {
@@ -14,6 +15,7 @@ struct AdventOfCode: ParsableCommand {
             Day2.self,
             Day3.self,
             Day4.self,
+            Day5.self,
         ]
     )
 }

@@ -27,6 +27,7 @@ let package = Package(
                 "Day2",
                 "Day3",
                 "Day4",
+                "Day5",
             ]),
         .target(
             name: "Day1",
@@ -50,6 +51,12 @@ let package = Package(
             name: "Day4",
             dependencies: [
                 .product(name: "ArgumentParser", package: "swift-argument-parser")
+            ]),
+        .target(
+            name: "Day5",
+            dependencies: [
+                .product(name: "ArgumentParser", package: "swift-argument-parser"),
+                .product(name: "Parsing", package: "swift-parsing"),
             ]),
     ],
     swiftLanguageModes: [.v6]
