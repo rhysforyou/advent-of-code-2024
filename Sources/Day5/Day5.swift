@@ -80,13 +80,9 @@ struct PageUpdate {
     mutating func fixPageOrder(rules: [PageRule]) {
         while !isCorrectlyOrdered(rules) {
             for rule in rules {
-                guard let beforeIndex = pages.firstIndex(of: rule.before),
-                      let afterIndex = pages.firstIndex(of: rule.after)
-                else {
-                    continue
-                }
-
-                if beforeIndex > afterIndex {
+                if let beforeIndex = pages.firstIndex(of: rule.before),
+                    let afterIndex = pages.firstIndex(of: rule.after)
+                {
                     pages.swapAt(beforeIndex, afterIndex)
                 }
             }
